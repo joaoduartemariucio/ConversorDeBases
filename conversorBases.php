@@ -12,12 +12,12 @@
         <div class="card-body">
             <form action="" method="POST">
                 <div class="form-group">
-                    <label for="baseSelecionada"><b>Selecione a baixo a base do número:</b></label>
+                    <label for="baseNumero"><b>Selecione a baixo a base do número:</b></label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="baseSelecionada">Opções</label>
+                            <label class="input-group-text" for="baseNumero">Opções</label>
                         </div>
-                        <select class="custom-select" id="baseSelecionada" name="baseSelecionada">
+                        <select class="custom-select" id="baseNumero" name="baseNumero">
                             <option value="0" selected>Selecione...</option>
                             <option value="2">2</option>
                             <option value="8">8</option>
@@ -31,7 +31,7 @@
                     <input class="form-control" id="numero" name="numero" aria-describedby="emailHelp" placeholder="Digite aqui o numero">
                     <small id="emailHelp" class="form-text text-muted">Neste campo você deve informar um número referente a base que você selecionou.</small>
                 </div>
-                <button class="btn float-right btn-primary" type="submit">Converter</button>
+                <button class="btn float-right btn-primary" type="submit">Submit</button>
             </form>
         </div>
       </div>
@@ -44,5 +44,137 @@
 <?php
     if($_POST){
         $numero = $_POST['numero'];
-        $baseSelecionada = $_POST['baseSelecionada'];
+        $baseNumero = $_POST['baseNumero']; 
+
+        conversorGeral($numero, $baseNumero);
+    }
+
+    //--------HelperMethods---------start-------------------
+    function suibstituirLetraPorNumero($letra){
+        switch(strtoupper($letra)){
+            case "A":
+                return 10;
+            case "B":
+                return 11;
+            case "C":
+                return 12;
+            case "D":
+                return 13;
+            case "E":
+                return 14;
+            case "F":
+                return 15;
+            default:
+                return (int)$letra;
+        }
+    }
+
+    function suibstituirNumeroPorLetra($num){
+        switch((int)$num){
+            case 10:
+                return "A";
+            case 11:
+                return "B";
+            case 12:
+                return "C";
+            case 13:
+                return "D";
+            case 14:
+                return "E";
+            case 15:
+                return "F";
+            default:
+                return $num;
+        }
+    }
+
+    function converterNumeroParaBase2($number){
+        $concatenacaoDosRestos = "";
+        $resultParcial = (int)$number;
+
+        for(;$resultParcial > 0;){
+            $resto = $resultParcial % (int)2;
+
+            $concatenacaoDosRestos = (int)2 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
+                    
+            $resultParcial = (int)($resultParcial / 2);
+        }
+
+        return $concatenacaoDosRestos;
+    }
+
+    function converterNumeroParaBase8($number){
+        $concatenacaoDosRestos = "";
+        $resultParcial = (int)$number;
+
+        for(;$resultParcial > 0;){
+            $resto = $resultParcial % (int)8;
+
+            $concatenacaoDosRestos = (int)8 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
+                    
+            $resultParcial = (int)($resultParcial / 8);
+        }
+
+        return $concatenacaoDosRestos;
+    }
+
+    function converterNumeroParaBase16($number){
+        $concatenacaoDosRestos = "";
+        $resultParcial = (int)$number;
+
+        for(;$resultParcial > 0;){
+            $resto = $resultParcial % (int)16;
+
+            $concatenacaoDosRestos = (int)16 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
+                    
+            $resultParcial = (int)($resultParcial / 16);
+        }
+
+        return $concatenacaoDosRestos;
+    }
+
+    function baseDezforBaseX($number, $base){
+        $concatenacaoDosRestos = "";
+        $resultParcial = (int)$number;
+
+        for(;$resultParcial > 0;){
+            $resto = $resultParcial % (int)$base;
+
+            $concatenacaoDosRestos = (int)$base == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
+                    
+            $resultParcial = (int)($resultParcial / $base);
+        }
+
+        return $concatenacaoDosRestos;
+    }
+
+
+
+function converterQualquerNumeroParaBase10($number, $base){
+        $result = 0;
+        $exp = 0;
+        for($i = strlen(strval($number)) - 1; $i >= 0; $i--, $exp++){
+            $numberOfIndex = strval($number[$i]);
+            $numberOfIndex = suibstituirLetraPorNumero($numberOfIndex);
+            $result+= pow($base, $exp) * (int)$numberOfIndex;
+        }
+
+        return $result;
+    }
+
+    function conversorGeral($num, $base){
+        $numNaBaseDez = 0;
+        $result = (object) array();
+
+        if($base == 10)
+            $numNaBaseDez = $num;
+        else
+        $numNaBaseDez = converterQualquerNumeroParaBase10(strval($num), $base);
+
+        $result->binario = converterNumeroParaBase2(strval($numNaBaseDez));;
+        $result->octal = converterNumeroParaBase8(strval($numNaBaseDez));
+        $result->decimal = $numNaBaseDez;
+        $result->hexadecimal = converterNumeroParaBase16(strval($numNaBaseDez));
+        
+        var_dump($result);
     }
