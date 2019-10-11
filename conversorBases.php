@@ -7,37 +7,58 @@
         <title>Conversor de bases</title>
     </head>
     <body>
-      <div class="card" style="margin: 25px;">
-        <h5 class="card-header"><b>Conversor de Bases</b></h5>
-        <div class="card-body">
-            <form action="" method="POST">
-                <div class="form-group">
-                    <label for="baseNumero"><b>Selecione a baixo a base do número:</b></label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+        <div class="card" style="margin: 25px;">
+            <h5 class="card-header"><b>Conversor de Bases</b></h5>
+            <div class="card-body">
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="baseNumero"><b>Selecione a baixo a base do número:</b></label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                             <label class="input-group-text" for="baseNumero">Opções</label>
                         </div>
-                        <select class="custom-select" id="baseNumero" name="baseNumero">
-                            <option value="0" selected>Selecione...</option>
-                            <option value="2">2</option>
-                            <option value="8">8</option>
-                            <option value="10">10</option>
-                            <option value="16">16</option>
-                        </select>
+                            <select class="custom-select" id="baseNumero" name="baseNumero">
+                                <option value="0" selected>Selecione...</option>
+                                <option value="2">2</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="numero"><b>Insira um número no campo abaixo:</b></label>
-                    <input class="form-control" id="numero" name="numero" aria-describedby="emailHelp" placeholder="Digite aqui o numero">
-                    <small id="emailHelp" class="form-text text-muted">Neste campo você deve informar um número referente a base que você selecionou.</small>
-                </div>
-                <button class="btn float-right btn-primary" type="submit">Submit</button>
-            </form>
+                    <div class="form-group">
+                        <label for="numero"><b>Insira um número no campo abaixo:</b></label>
+                        <input class="form-control" onKeyUp="validarNumeroInserido()" id="numero" name="numero" aria-describedby="emailHelp" placeholder="Digite aqui o numero">
+                        <small id="emailHelp" class="form-text text-muted">Neste campo você deve informar um número referente a base que você selecionou.</small>
+                    </div>
+                    <button class="btn float-right btn-primary" type="submit">Converter</button>
+                </form>
+            </div>
         </div>
-      </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://stackp(ath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+            function validarNumeroInserido() {
+                var baseSelecionada = $('#baseNumero').find('option:selected').val();
+                var numeroDigitado = $('#numero').val();
+                
+                switch(parseInt(baseSelecionada)){
+                    case 2:
+                        console.log(/^[0-1]+$/g.test(numeroDigitado));
+                    break;
+                    case 8:
+                        console.log(/^[0-7]+$/g.test(numeroDigitado));
+                    break;
+                    case 10:
+                        console.log(/^[0-9]+$/g.test(numeroDigitado));
+                    break;
+                    case 16:
+                        console.log(/^[0-9a-fA-F]+$/g.test(numeroDigitado));
+                    break;
+                }
+            }
+        </script>
     </body>
 </html>
 
