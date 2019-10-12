@@ -1,4 +1,4 @@
-Integrantes do grupo:
+#Integrantes do grupo:
 
     João Vitor Duarte Mariucio  
     Gabriel da Silva Barbosa
