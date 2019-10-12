@@ -1,3 +1,10 @@
+<!-- 
+    Integrantes do grupo:
+
+    João Vitor Duarte Mariucio
+    Gabriel da Silva Barbosa
+-->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
