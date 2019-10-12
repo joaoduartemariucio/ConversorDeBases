@@ -1,10 +1,3 @@
-<!-- 
-    Integrantes do grupo:
-
-    João Vitor Duarte Mariucio
-    Gabriel da Silva Barbosa
--->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
@@ -158,51 +151,6 @@
         }
     }
 
-    function converterNumeroParaBase2($number){
-        $concatenacaoDosRestos = "";
-        $resultParcial = (int)$number;
-
-        for(;$resultParcial > 0;){
-            $resto = $resultParcial % (int)2;
-
-            $concatenacaoDosRestos = (int)2 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
-                    
-            $resultParcial = (int)($resultParcial / 2);
-        }
-
-        return $concatenacaoDosRestos;
-    }
-
-    function converterNumeroParaBase8($number){
-        $concatenacaoDosRestos = "";
-        $resultParcial = (int)$number;
-
-        for(;$resultParcial > 0;){
-            $resto = $resultParcial % (int)8;
-
-            $concatenacaoDosRestos = (int)8 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
-                    
-            $resultParcial = (int)($resultParcial / 8);
-        }
-
-        return $concatenacaoDosRestos;
-    }
-
-    function converterNumeroParaBase16($number){
-        $concatenacaoDosRestos = "";
-        $resultParcial = (int)$number;
-
-        for(;$resultParcial > 0;){
-            $resto = $resultParcial % (int)16;
-
-            $concatenacaoDosRestos = (int)16 == 16 ? strval(suibstituirNumeroPorLetra($resto)).$concatenacaoDosRestos : strval($resto).$concatenacaoDosRestos;
-                    
-            $resultParcial = (int)($resultParcial / 16);
-        }
-
-        return $concatenacaoDosRestos;
-    }
-
     function baseDezforBaseX($number, $base){
         $concatenacaoDosRestos = "";
         $resultParcial = (int)$number;
@@ -218,20 +166,6 @@
         return $concatenacaoDosRestos;
     }
 
-
-
-function converterQualquerNumeroParaBase10($number, $base){
-        $result = 0;
-        $exp = 0;
-        for($i = strlen(strval($number)) - 1; $i >= 0; $i--, $exp++){
-            $numberOfIndex = strval($number[$i]);
-            $numberOfIndex = suibstituirLetraPorNumero($numberOfIndex);
-            $result+= pow($base, $exp) * (int)$numberOfIndex;
-        }
-
-        return $result;
-    }
-
     function conversorGeral($num, $base){
         $numNaBaseDez = 0;
 
@@ -240,10 +174,10 @@ function converterQualquerNumeroParaBase10($number, $base){
         else
         $numNaBaseDez = converterQualquerNumeroParaBase10(strval($num), $base);
 
-        $binario = converterNumeroParaBase2(strval($numNaBaseDez));;
-        $octal = converterNumeroParaBase8(strval($numNaBaseDez));
+        $binario = baseDezforBaseX(strval($numNaBaseDez), 2);;
+        $octal = baseDezforBaseX(strval($numNaBaseDez), 8);
         $decimal = $numNaBaseDez;
-        $hexadecimal = converterNumeroParaBase16(strval($numNaBaseDez));
+        $hexadecimal = baseDezforBaseX(strval($numNaBaseDez),16);
         
         echo "<div class=\"card\"  style=\"margin: 25px;\">
             <h5 class=\"card-header\"><b>Resultado das conversões</b></h5>
